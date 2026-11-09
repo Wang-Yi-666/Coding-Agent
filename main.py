@@ -18,7 +18,7 @@ def main():
 
     print("=" * 60)
     print("  欢迎使用 Coding Agent (v0.1 MVP - REPL 交互模式)")
-    print("  当前支持工具: read_file")
+    print("  当前支持工具: read_file, list_directory")
     print("  输入 'exit'、'quit' 或按 Ctrl+C 可退出程序")
     print("=" * 60)
 

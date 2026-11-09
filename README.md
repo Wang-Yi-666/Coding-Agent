@@ -6,14 +6,15 @@
 
 ```
 .
-├── main.py          # REPL 交互入口
-├── agent.py         # Agent Loop 核心调度与上下文管理
-├── tools.py         # read_file 工具实现与参数校验
-├── llm_client.py    # DeepSeek / OpenAI 兼容接口封装
-├── sample.py        # 供 Agent 测试读取的示例代码
-├── requirements.txt # 项目依赖
-├── .env.example     # 环境变量示例
-└── .gitignore       # Git 忽略规则
+├── main.py                # REPL 交互入口
+├── agent.py               # Agent Loop 核心调度与上下文管理
+├── tools.py               # read_file 与 list_directory 工具实现及参数校验
+├── llm_client.py          # DeepSeek / OpenAI 兼容接口封装
+├── sample.py              # 供 Agent 测试读取的示例代码
+├── test_list_directory.py # list_directory 验收测试脚本
+├── requirements.txt       # 项目依赖
+├── .env.example           # 环境变量示例
+└── .gitignore             # Git 忽略规则
 ```
 
 ## 快速上手
@@ -64,8 +65,22 @@ You > 请帮我读取不存在的 not_found.py 文件。
 ```
 Agent 会尝试调用工具，工具捕获并返回 `Error: 文件不存在`，Agent 再据此如实告知你文件不存在，不会崩溃。
 
-#### 体验用例 3：普通闲聊（不触发工具）
+#### 体验用例 3：查看目录结构
+```
+You > 请查看当前工作区有哪些文件和子目录。
+```
+Agent 会调用 `list_directory` 工具获取工作区目录树并向用户汇报。
+
+#### 体验用例 4：普通闲聊（不触发工具）
 ```
 You > 你好，你是谁？
 ```
 模型直接给出回答，不会盲目触发工具。
+
+## 自动化测试
+
+运行 `list_directory` 的验收测试套件（覆盖树形展示、子目录查询、越界防御、截断保护等 24 项检查）：
+
+```bash
+python -X utf8 test_list_directory.py
+```
